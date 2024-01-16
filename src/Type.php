@@ -4,6 +4,7 @@ namespace Progphil1337\Config;
 
 use InvalidArgumentException;
 use Progphil1337\Config\Reader\YamlReader;
+use Progphil1337\Config\Reader\JsonReader;
 
 enum Type: int {
 
@@ -12,8 +13,9 @@ enum Type: int {
 	case INI = 2;
 
 	public function getReader(): Reader {
-		return match($this->value) {
-			self::YAML->value => new YamlReader(),
+		return match($this) {
+			self::YAML => new YamlReader(),
+			self::JSON => new JsonReader(),
 			default => throw new \RuntimeException()
 		};
 	}
